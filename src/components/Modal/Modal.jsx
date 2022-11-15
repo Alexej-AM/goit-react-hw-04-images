@@ -1,4 +1,3 @@
-import { Component } from 'react';
 import { createPortal } from 'react-dom';
 import { Overlay, StyledModal } from './ModalStyled';
 import PropTypes from 'prop-types';
@@ -8,7 +7,12 @@ const modalRoot = document.querySelector('#modal-root');
 
 
 export const  Modal =({onClose, children}) => {
-
+  const handleClose = useCallback(({ target, currentTarget, code }) => {
+    if (target === currentTarget || code === 'Escape') {
+      onClose();
+    }
+  }, [onClose]);
+  
   useEffect(() => {
     window.addEventListener('keydown', handleClose);
 
@@ -17,11 +21,7 @@ export const  Modal =({onClose, children}) => {
     }
   }, [handleClose]);
 
-  const handleClose = useCallback(({ target, currentTarget, code }) => {
-    if (target === currentTarget || code === 'Escape') {
-      onClose();
-    }
-  }, [onClose]);
+  
 
   return createPortal(
              <Overlay onClick={handleClose}>

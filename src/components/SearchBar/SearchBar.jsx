@@ -1,41 +1,37 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
+// import PropTypes from 'prop-types';
 import {SearchBarHeader, SearchForm, ButtonForm, ButtonLabel, FormInput} from './SearchBarStyled';
 // import {Search} from '@styled-icons/bootstrap';
 import {Searchengin} from '@styled-icons/fa-brands';
+import { useState } from 'react';
 
 
+export const SearchBar = ({onSubmit}) => {
+const [name, setName] = useState('');
 
-export class SearchBar extends Component {
-
-    state = {
-        name: '',
-    }
-
-onHandleChange = (e) => {
-this.setState({[e.target.name]: e.target.value})
+const onHandleChange = e => {
+const {value} = e.target;
+setName(value)
 }
 
-handleSubmit = e => {
+const handleSubmit = e => {
     e.preventDefault();
-    this.props.onSubmit({ ...this.state });
-    this.setState({ name: '' });
+    onSubmit(name);
+  setName('');
   };
 
-  render() {
-    return (
-      
-        <SearchBarHeader >
-  <SearchForm onSubmit={this.handleSubmit} >
-    <ButtonForm   type="submit" >
-    <Searchengin/>
-      <ButtonLabel >Search</ButtonLabel>
-    </ButtonForm>
 
-    <FormInput
-      onChange={this.onHandleChange}
+  return (
+    <SearchBarHeader >
+   <SearchForm onSubmit={handleSubmit} >
+     <ButtonForm   type="submit" >
+     <Searchengin/>
+       <ButtonLabel >Search</ButtonLabel>
+     </ButtonForm>
+
+     <FormInput
+      onChange={onHandleChange}
       name = "name"
-      value = {this.state.name}
+      value = {name}
       type="text"
       autocomplete="off"
       autoFocus
@@ -43,11 +39,54 @@ handleSubmit = e => {
     />
   </SearchForm>
 </SearchBarHeader>
-      
-    )
-  }
+  )
 }
 
-SearchBar.propTypes = {
-  onSubmit: PropTypes.func.isRequired,
-};
+
+
+
+// export class SearchBar extends Component {
+
+//     state = {
+//         name: '',
+//     }
+
+// onHandleChange = (e) => {
+// this.setState({[e.target.name]: e.target.value})
+// }
+
+// handleSubmit = e => {
+//     e.preventDefault();
+//     this.props.onSubmit({ ...this.state });
+//     this.setState({ name: '' });
+//   };
+
+//   render() {
+//     return (
+      
+//         <SearchBarHeader >
+//   <SearchForm onSubmit={this.handleSubmit} >
+//     <ButtonForm   type="submit" >
+//     <Searchengin/>
+//       <ButtonLabel >Search</ButtonLabel>
+//     </ButtonForm>
+
+//     <FormInput
+//       onChange={this.onHandleChange}
+//       name = "name"
+//       value = {this.state.name}
+//       type="text"
+//       autocomplete="off"
+//       autoFocus
+//       placeholder="Search images and photos"
+//     />
+//   </SearchForm>
+// </SearchBarHeader>
+      
+//     )
+//   }
+// }
+
+// SearchBar.propTypes = {
+//   onSubmit: PropTypes.func.isRequired,
+// };
